@@ -8,7 +8,11 @@
 
 ## Установка
 
-1. добавить в composer.json
+1. выполнить
+```
+require kemerovo-man/log-vendor
+```
+или добавить в composer.json
 ```
     "require": {
         "kemerovo-man/log-vendor": "^1.0"
