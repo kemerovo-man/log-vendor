@@ -15,7 +15,7 @@ require kemerovo-man/log-vendor
 или добавить в composer.json
 ```
     "require": {
-        "kemerovo-man/log-vendor": "^1.0"
+        "kemerovo-man/log-vendor": "^0.0.1"
     }
 ```
 2. добавить в app.conf
@@ -52,5 +52,4 @@ class Log extends \KemerovoMan\LogVendor\Log
     }
 }
 
-test
 ```
