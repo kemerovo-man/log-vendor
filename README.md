@@ -15,7 +15,7 @@ require kemerovo-man/log-vendor
 или добавить в composer.json
 ```
     "require": {
-        "kemerovo-man/log-vendor": "^0.0.1"
+        "kemerovo-man/log-vendor": "0.0.*"
     }
 ```
 2. добавить в app.conf
@@ -35,7 +35,7 @@ require kemerovo-man/log-vendor
 'middleware' => ['web', 'auth']
 ```
 
-5. можно расширить класс
+5. Создать папку app/Log, в ней создать файл Log.php
 
 Например:
 ```
@@ -53,3 +53,5 @@ class Log extends \KemerovoMan\LogVendor\Log
 }
 
 ```
+
+6. Вызвать в коде можно так: Log::oracleLog(1, 'ok');
