@@ -1,5 +1,6 @@
 {
   "name": "kemerovo-man/log-vendor",
+  "version": "v1.0",
   "require": {
     "laravel/framework": "5.6.*"
   },
