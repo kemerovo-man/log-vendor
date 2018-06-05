@@ -1,6 +1,6 @@
 <?php
 
-//namespace KemerovoMan\LogVendor;
+namespace KemerovoMan\LogVendor;
 
 use \Monolog\Logger;
 use \Monolog\Handler\StreamHandler;

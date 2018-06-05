@@ -11,7 +11,7 @@
 1. добавить в composer.json
 ```
     "require": {
-        "KemerovoMan/LogVendor": "dev-master"
+        "kemerovo-man/log-vendor": "^1.0"
     }
 ```
 2. добавить в app.conf
