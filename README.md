@@ -54,4 +54,17 @@ class Log extends \KemerovoMan\LogVendor\Log
 
 ```
 
-6. Вызвать в коде можно так: Log::oracleLog(1, 'ok');
+6. Вызвать в коде можно так: \Log::oracleLog(1, 'ok');
+
+7. Можно изменить Exceptions/Handler.php
+
+```
+    public function report(Exception $exception)
+    {
+        if ($this->shouldntReport($exception)) {
+            return;
+        }
+        parent::report($exception);
+        \Log::laravelReport($exception);
+    }
+```
