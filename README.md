@@ -51,4 +51,6 @@ class Log extends \KemerovoMan\LogVendor\Log
         ]);
     }
 }
+
+test
 ```
