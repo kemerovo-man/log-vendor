@@ -1,4 +1,4 @@
-# Лог вендор для Laravel 5.5
+# Лог вендор для Laravel 5.6
 
 Добавляет в проект возможность логировать сразу в текстовый файл и в json, и читать json логи в браузере.
 Настроики в config/log.php
@@ -12,16 +12,7 @@
 ```
     "require": {
         "KemerovoMan/LogVendor": "dev-master"
-    },
-    "config": {
-        "secure-http": false
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://satis.dev.a42.ru/"
-        }
-    ]
+    }
 ```
 2. добавить в app.conf
 ```
@@ -33,7 +24,7 @@
 
 4. настроить config/log.php
 
-можно закрыть роуты /logs, /logs/clear, /logs/{file} мидлварами
+можно закрыть роуты /logs, /logs/{file} мидлварами
 
 Например:
 ```
