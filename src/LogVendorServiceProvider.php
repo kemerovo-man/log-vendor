@@ -25,8 +25,12 @@ class LogVendorServiceProvider extends ServiceProvider
     public function register()
     {
         require_once __DIR__ . '/' . 'routes.php';
+        if (!is_dir(app_path('Log'))) {
+            mkdir(app_path('Log'));
+        }
         $this->publishes([
             __DIR__ . '/Config/log.php' => config_path('log.php'),
+            __DIR__ . '/Log/Log.php' => app_path('Log/Log.php'),
         ]);
         $path = app_path() . '/Log/';
         if (is_dir($path)) {
