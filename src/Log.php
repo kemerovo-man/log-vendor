@@ -27,7 +27,13 @@ class Log
             if (is_file($file)) {
                 $days = config('log.storeDays', 30);
                 if ($now - filemtime($file) >= 60 * 60 * 24 * $days) {
-                    unlink($file);
+                    if (file_exists($file)) {
+                        try {
+                            unlink($file);
+                        } catch (\Exception $e) {
+                            
+                        }
+                    }
                 }
             }
         }
