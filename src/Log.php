@@ -10,6 +10,17 @@ use \Carbon\Carbon;
 class Log
 {
 
+    protected static function log($logName, $params)
+    {
+        static::deleteOldFiles();
+        $info = '';
+        foreach ($params as $key => $value) {
+            $info .= static::wrap($key, $value);
+        }
+        static::txtLog($logName, $info);
+        static::jsonLog($logName, $params);
+    }
+
     protected static function wrap($key, $value)
     {
         $stringValue = $value;
@@ -37,17 +48,6 @@ class Log
                 }
             }
         }
-    }
-
-    protected static function logToFiles($logName, $params)
-    {
-        static::deleteOldFiles();
-        $info = '';
-        foreach ($params as $key => $value) {
-            $info .= static::wrap($key, $value);
-        }
-        static::txtLog($logName, $info);
-        static::jsonLog($logName, $params);
     }
 
     protected static function txtLog($name, $info)
@@ -107,7 +107,7 @@ class Log
 
     public static function testLog($message, $param = 'test')
     {
-        static::logToFiles('test', [
+        static::log('test', [
             'message' => $message,
             'param' => $param
         ]);
