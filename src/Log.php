@@ -12,6 +12,9 @@ class Log
 
     protected static function log($logName, $params)
     {
+        $disable = config('log.disable', false);
+        if ($disable)
+            return;
         static::deleteOldFiles();
         $info = '';
         foreach ($params as $key => $value) {
@@ -42,7 +45,7 @@ class Log
                         try {
                             unlink($file);
                         } catch (\Exception $e) {
-                            
+
                         }
                     }
                 }
