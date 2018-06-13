@@ -61,7 +61,9 @@ class Log
         $date = Carbon::now();
         $path = storage_path('logs') . '/' . $date->toDateString() . '_' . $name . '.log';
         $streamHandler = new StreamHandler($path);
-        $format = new LineFormatter("[%datetime%] %message%\n", "d/M/Y:H:i:s O");
+        $lineFormat = config('log.format', "[%datetime%] %message%\n");
+        $dateFormat = config('log.dateFormat', "d/M/Y:H:i:s O");
+        $format = new LineFormatter($lineFormat, $dateFormat);
         $streamHandler->setFormatter($format);
         $log->pushHandler($streamHandler);
         $log->addInfo($info);
