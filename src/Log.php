@@ -2,16 +2,17 @@
 
 namespace KemerovoMan\LogVendor;
 
-use Illuminate\Log\LogManager;
 use \Monolog\Logger;
 use \Monolog\Handler\StreamHandler;
 use \Monolog\Formatter\LineFormatter;
 use \Carbon\Carbon;
 
-class Log extends LogManager
+use \Illuminate\Support\Facades\Log as LaravelLog;
+
+class Log
 {
 
-    protected static function logTo($logName, $params)
+    protected static function log($logName, $params)
     {
         $disable = config('log.disable', false);
         if ($disable)
@@ -93,6 +94,46 @@ class Log extends LogManager
         }
     }
 
+    public static function info($message, $context = [])
+    {
+        LaravelLog::info($message, $context);
+    }
+
+    public static function alert($message, $context = [])
+    {
+        LaravelLog::alert($message, $context);
+    }
+
+    public static function debug($message, $context = [])
+    {
+        LaravelLog::debug($message, $context);
+    }
+
+    public static function critical($message, $context = [])
+    {
+        LaravelLog::critical($message, $context);
+    }
+
+    public static function emergency($message, $context = [])
+    {
+        LaravelLog::emergency($message, $context);
+    }
+
+    public static function error($message, $context = [])
+    {
+        LaravelLog::error($message, $context);
+    }
+
+    public static function notice($message, $context = [])
+    {
+        LaravelLog::notice($message, $context);
+    }
+
+    public static function warning($message, $context = [])
+    {
+        LaravelLog::warning($message, $context);
+    }
+
     public static function laravelReport(\Exception $e)
     {
         $params = [
@@ -106,7 +147,7 @@ class Log extends LogManager
 
     public static function testLog($message, $param = 'test')
     {
-        static::logTo('test', [
+        static::log('test', [
             'message' => $message,
             'param' => $param
         ]);
