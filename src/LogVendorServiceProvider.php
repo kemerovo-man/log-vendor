@@ -36,6 +36,10 @@ class LogVendorServiceProvider extends ServiceProvider
         if (is_dir($path)) {
             $this->req($path);
         }
+
+        $this->app->singleton('log', function () {
+            return new Log(app());
+        });
     }
 
 }
