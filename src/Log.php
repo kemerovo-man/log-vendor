@@ -2,15 +2,16 @@
 
 namespace KemerovoMan\LogVendor;
 
+use Illuminate\Log\LogManager;
 use \Monolog\Logger;
 use \Monolog\Handler\StreamHandler;
 use \Monolog\Formatter\LineFormatter;
 use \Carbon\Carbon;
 
-class Log
+class Log extends LogManager
 {
 
-    protected static function log($logName, $params)
+    protected static function logTo($logName, $params)
     {
         $disable = config('log.disable', false);
         if ($disable)
@@ -92,11 +93,6 @@ class Log
         }
     }
 
-    public static function info($info)
-    {
-        \Illuminate\Support\Facades\Log::info($info);
-    }
-
     public static function laravelReport(\Exception $e)
     {
         $params = [
@@ -110,7 +106,7 @@ class Log
 
     public static function testLog($message, $param = 'test')
     {
-        static::log('test', [
+        static::logTo('test', [
             'message' => $message,
             'param' => $param
         ]);
