@@ -13,11 +13,19 @@
 require kemerovo-man/log-vendor
 ```
 или добавить в composer.json
+для Laravel 5.6
 ```
     "require": {
         "kemerovo-man/log-vendor": "0.0.*"
     }
 ```
+для Laravel 5.7
+```
+    "require": {
+        "kemerovo-man/log-vendor": "0.1.*"
+    }
+```
+
 2. добавить в app.conf
 ```
     'providers' => [
