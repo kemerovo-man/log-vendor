@@ -107,6 +107,30 @@ class Log
         static::jsonLog('laravel', $params);
     }
 
+    private function getPhpDocs($class)
+    {
+        $reflectionClass = new \ReflectionClass($class);
+        $phpDocs = $reflectionClass->getDocComment();
+        $phpDocs = explode("\n", $phpDocs);
+        $phpDocs = array_values(array_filter($phpDocs, function ($phpDoc) {
+            return strpos($phpDoc, '@method static');
+        }));
+        return $phpDocs;
+    }
+
+    private function getPhpDocArgs($phpDocs, $name)
+    {
+        foreach ($phpDocs as $phpDoc) {
+            preg_match('/\* @method static void (.*)\((.*)\)/', $phpDoc, $matches);
+            if (count($matches) == 3 && $matches[1] == $name) {
+                return array_map(function ($arg) {
+                    return trim($arg);
+                }, explode(',', $matches[2]));
+            }
+        }
+        return null;
+    }
+
     public function __call($name, $arguments)
     {
         $methods = [
@@ -125,13 +149,16 @@ class Log
             return;
         }
 
+        $phpDocs = $this->getPhpDocs(\App\Facades\Log::class);
+        $args = $this->getPhpDocArgs($phpDocs, $name);
         $data = [];
-        $config = config('log.logs.' . $name);
-        if ($config && !empty($config['keys'])
-            && count($arguments) == count($config['keys'])) {
-            foreach ($config['keys'] as $i => $key) {
-                $data[$key] = $arguments[$i];
+        foreach ($args as $i => $arg) {
+            preg_match('/.?\$(.*)/', $arg, $matches);
+            if (count($matches) == 2) {
+                $data[$matches[1]] = $arguments[$i];
             }
+        }
+        if ($data) {
             $this->log(snake_case($name), $data);
         }
     }
