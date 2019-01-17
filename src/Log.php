@@ -12,21 +12,21 @@ use \Illuminate\Support\Facades\Log as LaravelLog;
 class Log
 {
 
-    protected static function log($logName, $params)
+    protected function log($logName, $params)
     {
         $disable = config('log.disable', false);
         if ($disable)
             return;
-        static::deleteOldFiles();
+        $this->deleteOldFiles();
         $info = '';
         foreach ($params as $key => $value) {
             $info .= static::wrap($key, $value);
         }
-        static::txtLog($logName, $info);
-        static::jsonLog($logName, $params);
+        $this->txtLog($logName, $info);
+        $this->jsonLog($logName, $params);
     }
 
-    protected static function wrap($key, $value)
+    protected function wrap($key, $value)
     {
         $stringValue = $value;
         if (is_array($value)) {
@@ -35,7 +35,7 @@ class Log
         return $key . ': [' . $stringValue . '] ';
     }
 
-    protected static function deleteOldFiles()
+    protected function deleteOldFiles()
     {
         $files = glob(storage_path('logs') . '/*');
         $now = time();
@@ -55,7 +55,7 @@ class Log
         }
     }
 
-    protected static function txtLog($name, $info)
+    protected function txtLog($name, $info)
     {
         $log = new Logger($name);
         $date = Carbon::now();
@@ -69,7 +69,7 @@ class Log
         $log->addInfo($info);
     }
 
-    protected static function jsonLog($name, $params)
+    protected function jsonLog($name, $params)
     {
         if (!$params) {
             return;
@@ -96,7 +96,7 @@ class Log
         }
     }
 
-    public static function laravelReport(\Exception $e)
+    public function laravelReport(\Exception $e)
     {
         $params = [
             'message' => $e->getMessage(),
@@ -104,10 +104,10 @@ class Log
             'line' => $e->getLine(),
             'trace' => $e->getTrace()
         ];
-        static::jsonLog('laravel', $params);
+        $this->jsonLog('laravel', $params);
     }
 
-    private function getPhpDocs($class)
+    protected function getPhpDocs($class)
     {
         $reflectionClass = new \ReflectionClass($class);
         $phpDocs = $reflectionClass->getDocComment();
@@ -118,7 +118,7 @@ class Log
         return $phpDocs;
     }
 
-    private function getPhpDocArgs($phpDocs, $name)
+    protected function getPhpDocArgs($phpDocs, $name)
     {
         foreach ($phpDocs as $phpDoc) {
             preg_match('/\* @method static void (.*)\((.*)\)/', $phpDoc, $matches);
@@ -149,7 +149,11 @@ class Log
             return;
         }
 
-        $phpDocs = $this->getPhpDocs(\App\Facades\Log::class);
+        $facade = config('log.facade');
+        if (!$facade) {
+            return;
+        }
+        $phpDocs = $this->getPhpDocs($facade);
         $args = $this->getPhpDocArgs($phpDocs, $name);
         $data = [];
         foreach ($args as $i => $arg) {
