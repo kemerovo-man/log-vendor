@@ -10,32 +10,18 @@ class LogVendorServiceProvider extends ServiceProvider
     {
     }
 
-//    protected function req($dir)
-//    {
-//        $scan = glob($dir . DIRECTORY_SEPARATOR . "*");
-//        foreach ($scan as $path) {
-//            if (preg_match('/\.php$/', $path)) {
-//                require_once $path;
-//            } elseif (is_dir($path)) {
-//                $this->req($path);
-//            }
-//        }
-//    }
-
     public function register()
     {
         require_once __DIR__ . '/' . 'routes.php';
-        if (!is_dir(app_path('Log'))) {
-            mkdir(app_path('Log'));
-        }
+        app()->bind(Log::class, function () {
+            return new Log();
+        });
+        app()->alias(Log::class,
+            'log.service');
+
         $this->publishes([
             __DIR__ . '/Config/log.php' => config_path('log.php'),
-            __DIR__ . '/Log/Log.php.example' => app_path('Log/Log.php'),
         ]);
-//        $path = app_path() . '/Log/';
-//        if (is_dir($path)) {
-//            $this->req($path);
-//        }
     }
 
 }

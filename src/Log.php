@@ -96,46 +96,6 @@ class Log
         }
     }
 
-    public static function info($message, $context = [])
-    {
-        LaravelLog::info($message, $context);
-    }
-
-    public static function alert($message, $context = [])
-    {
-        LaravelLog::alert($message, $context);
-    }
-
-    public static function debug($message, $context = [])
-    {
-        LaravelLog::debug($message, $context);
-    }
-
-    public static function critical($message, $context = [])
-    {
-        LaravelLog::critical($message, $context);
-    }
-
-    public static function emergency($message, $context = [])
-    {
-        LaravelLog::emergency($message, $context);
-    }
-
-    public static function error($message, $context = [])
-    {
-        LaravelLog::error($message, $context);
-    }
-
-    public static function notice($message, $context = [])
-    {
-        LaravelLog::notice($message, $context);
-    }
-
-    public static function warning($message, $context = [])
-    {
-        LaravelLog::warning($message, $context);
-    }
-
     public static function laravelReport(\Exception $e)
     {
         $params = [
@@ -147,11 +107,32 @@ class Log
         static::jsonLog('laravel', $params);
     }
 
-    public static function testLog($message, $param = 'test')
+    public function __call($name, $arguments)
     {
-        static::log('test', [
-            'message' => $message,
-            'param' => $param
-        ]);
+        $methods = [
+            'info',
+            'alert',
+            'debug',
+            'critical',
+            'emergency',
+            'error',
+            'notice',
+            'warning',
+        ];
+
+        if (in_array($name, $methods)) {
+            call_user_func_array([LaravelLog::class, $name], $arguments);
+            return;
+        }
+
+        $data = [];
+        $config = config('log.logs.' . $name);
+        if ($config && !empty($config['keys'])
+            && count($arguments) == count($config['keys'])) {
+            foreach ($config['keys'] as $i => $key) {
+                $data[$key] = $arguments[$i];
+            }
+            $this->log(snake_case($name), $data);
+        }
     }
 }

@@ -22,7 +22,7 @@ require kemerovo-man/log-vendor
 для Laravel 5.7
 ```
     "require": {
-        "kemerovo-man/log-vendor": "0.1.*"
+        "kemerovo-man/log-vendor": "0.2.*"
     }
 ```
 
@@ -42,27 +42,7 @@ require kemerovo-man/log-vendor
 ```
 'middleware' => ['web', 'auth']
 ```
-
-5. Создать папку app/Log, в ней создать файл Log.php
-
-Например:
-```
-<?php
-
-class Log extends \KemerovoMan\LogVendor\Log
-{
-    public static function oracleLog($id, $result)
-    {
-        static::logToFiles('oracle', [
-            'id' => $id,
-            'result' => $result
-        ]);
-    }
-}
-
-```
-
-6. Вызвать в коде можно так: \Log::oracleLog(1, 'ok');
+5. Написать конфиг для всех логов и добавить методы на фасаде
 
 7. Можно изменить Exceptions/Handler.php
 
