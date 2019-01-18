@@ -149,21 +149,23 @@ class Log
             return;
         }
 
-        $facade = config('log.facade');
-        if (!$facade) {
+        $facades = config('log.facades');
+        if (!$facades) {
             return;
         }
-        $phpDocs = $this->getPhpDocs($facade);
-        $args = $this->getPhpDocArgs($phpDocs, $name);
-        $data = [];
-        foreach ($args as $i => $arg) {
-            preg_match('/.?\$(.*)/', $arg, $matches);
-            if (count($matches) == 2) {
-                $data[$matches[1]] = $arguments[$i];
+        foreach ($facades as $facade) {
+            $phpDocs = $this->getPhpDocs($facade);
+            $args = $this->getPhpDocArgs($phpDocs, $name);
+            $data = [];
+            foreach ($args as $i => $arg) {
+                preg_match('/.?\$(.*)/', $arg, $matches);
+                if (count($matches) == 2) {
+                    $data[$matches[1]] = $arguments[$i];
+                }
             }
-        }
-        if ($data) {
-            $this->log(snake_case($name), $data);
+            if ($data) {
+                $this->log(snake_case($name), $data);
+            }
         }
     }
 }
