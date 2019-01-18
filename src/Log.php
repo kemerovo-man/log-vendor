@@ -157,10 +157,12 @@ class Log
             $phpDocs = $this->getPhpDocs($facade);
             $args = $this->getPhpDocArgs($phpDocs, $name);
             $data = [];
-            foreach ($args as $i => $arg) {
-                preg_match('/.?\$(.*)/', $arg, $matches);
-                if (count($matches) == 2) {
-                    $data[$matches[1]] = $arguments[$i];
+            if ($args) {
+                foreach ($args as $i => $arg) {
+                    preg_match('/.?\$(.*)/', $arg, $matches);
+                    if (count($matches) == 2) {
+                        $data[$matches[1]] = $arguments[$i];
+                    }
                 }
             }
             if ($data) {
