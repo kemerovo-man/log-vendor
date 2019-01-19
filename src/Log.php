@@ -12,6 +12,20 @@ use \Illuminate\Support\Facades\Log as LaravelLog;
 class Log
 {
 
+    protected $facades = [];
+
+    public function __construct()
+    {
+        if (config('log.facade')) {
+            $this->facades[] = config('log.facade');
+        }
+    }
+
+    public function addFacade($facade)
+    {
+        $this->facades[] = $facade;
+    }
+
     protected function log($logName, $params)
     {
         $disable = config('log.disable', false);
@@ -149,11 +163,10 @@ class Log
             return;
         }
 
-        $facades = config('log.facades');
-        if (!$facades) {
+        if (!$this->facades) {
             return;
         }
-        foreach ($facades as $facade) {
+        foreach ($this->facades as $facade) {
             $phpDocs = $this->getPhpDocs($facade);
             $args = $this->getPhpDocArgs($phpDocs, $name);
             $data = [];
