@@ -22,6 +22,6 @@ class LogExample extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'log.service';
+        return 'log.vendor.service';
     }
 }

@@ -17,8 +17,7 @@ class LogVendorServiceProvider extends ServiceProvider
             return new Log();
         });
         app()->alias(Log::class,
-            'log.service');
-
+            'log.vendor.service');
         $this->publishes([
             __DIR__ . '/Config/log.php' => config_path('log.php'),
         ]);
