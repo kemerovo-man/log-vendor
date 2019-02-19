@@ -42,5 +42,4 @@ class LogController extends Controller
             abort(404);
         }
     }
-
 }
