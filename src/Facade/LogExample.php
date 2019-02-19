@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static void info(string $message, array $context = [])
  * @method static void debug(string $message, array $context = [])
  * @method static void log($level, string $message, array $context = [])
+ *
+ * @method static void laravelReport(\Exception $e)
  */
 class LogExample extends Facade
 {
