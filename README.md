@@ -1,4 +1,4 @@
-# Лог вендор для Laravel 5.6
+# Лог вендор для Laravel 5.7
 
 Добавляет в проект возможность логировать сразу в текстовый файл и в json, и читать json логи в браузере.
 Настроики в config/log.php
@@ -12,17 +12,10 @@
 ```
 require kemerovo-man/log-vendor
 ```
-или добавить в composer.json
-для Laravel 5.6
-```
-    "require": {
-        "kemerovo-man/log-vendor": "0.0.*"
-    }
-```
 для Laravel 5.7
 ```
     "require": {
-        "kemerovo-man/log-vendor": "0.2.*"
+        "kemerovo-man/log-vendor": "5.7.*"
     }
 ```
 
