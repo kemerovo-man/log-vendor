@@ -173,7 +173,7 @@ class Log
             if ($args) {
                 foreach ($args as $i => $arg) {
                     preg_match('/.?\$(.*)/', $arg, $matches);
-                    if (count($matches) == 2) {
+                    if (count($matches) == 2 && isset($arguments[$i])) {
                         $data[$matches[1]] = $arguments[$i];
                     }
                 }
