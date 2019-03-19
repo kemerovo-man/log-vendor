@@ -172,8 +172,9 @@ class Log
             $data = [];
             if ($args) {
                 foreach ($args as $i => $arg) {
-                    preg_match('/.?\$(.*)/', $arg, $matches);
-                    if (count($matches) == 2 && isset($arguments[$i])) {
+                    //array $context = []
+                    preg_match('/.?\$([^\s^=^,^)]*)\s?(=[^$^,^)]*)?/', $arg, $matches);
+                    if (isset($matches[1]) && isset($arguments[$i])) {
                         $data[$matches[1]] = $arguments[$i];
                     }
                 }
