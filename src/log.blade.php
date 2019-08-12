@@ -11,13 +11,21 @@
             display: none;
             padding-left: 10px;
         }
+
+        .logs2 {
+            display: none;
+            padding-left: 20px;
+        }
     </style>
     <script language="JavaScript">
-        $(function () {
-            $('.date').click(function () {
-                $(this).next().slideToggle();
-            });
+      $(function () {
+        $('.date').click(function () {
+          $(this).next().slideToggle();
         });
+        $('.first_word').click(function () {
+          $(this).next().slideToggle();
+        });
+      });
     </script>
 </head>
 <body>
@@ -31,9 +39,26 @@
         </a>
     </div>
     <div class="logs">
-        @foreach($logs as $log)
-            <a href="/logs/{{$log}}">{{$log}}</a><br>
-        @endforeach
+        @if(config('log.collapseFirstWord'))
+            @foreach($logs as $firstWord=>$firsWordLogs)
+                @if($firstWord != 'ALL')
+                    <div class="first_word">
+                        <a href="#">
+                            {{$firstWord}}
+                        </a>
+                    </div>
+                    <div class="logs2">
+                        @foreach($firsWordLogs as $log)
+                            <a href="/logs/{{$log}}">{{$log}}</a><br>
+                        @endforeach
+                    </div>
+                @endif
+            @endforeach
+        @else
+            @foreach($logs['ALL'] as $log)
+                <a href="/logs/{{$log}}">{{$log}}</a><br>
+            @endforeach
+        @endif
     </div>
 @endforeach
 

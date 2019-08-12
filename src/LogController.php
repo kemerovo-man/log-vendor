@@ -18,11 +18,17 @@ class LogController extends Controller
         natsort($logs);
         $res = [];
         foreach ($logs as $log) {
-            $date = substr($log, 0, 10);
-            if (!isset($res[$date])) {
-                $res[$date] = [];
+            $words = explode('_', $log);
+            $date = $words[0];
+            $firstWord = $words[1];
+            if (!isset($res[$date][$firstWord])) {
+                $res[$date][$firstWord] = [];
             }
-            $res[$date][] = $log;
+            if (!isset($res[$date]['ALL'])) {
+                $res[$date]['ALL'] = [];
+            }
+            $res[$date][$firstWord][] = $log;
+            $res[$date]['ALL'][] = $log;
         }
         return View::make('log')->with('dateLogs', $res);
     }
