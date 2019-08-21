@@ -12,6 +12,7 @@ class LogController extends Controller
     public function index()
     {
         $search = Input::get('search');
+        $title = config('log.title');
         View::addLocation(__DIR__);
         $logs = $this->getJsonLogs();
         if ($search) {
@@ -22,6 +23,7 @@ class LogController extends Controller
         }
         $res = $this->prepareLogs($logs);
         return View::make('log')
+            ->with('title', $title)
             ->with('dateLogs', $res)
             ->with('search', $search);
     }
