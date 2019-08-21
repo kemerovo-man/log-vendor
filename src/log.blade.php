@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Логи</title>
+    <title>{{$title}}</title>
     <script
             src="https://code.jquery.com/jquery-2.2.4.min.js"
             integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
@@ -35,6 +35,7 @@
         <input type="submit" value="Search">
     </form>
 @endif
+<h1>{{$title}}</h1>
 <h2>
     Logs {{$search}}
     @if($search)

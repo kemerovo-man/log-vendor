@@ -2,6 +2,7 @@
 
 namespace KemerovoMan\LogVendor;
 
+use Illuminate\Support\Str;
 use \Monolog\Logger;
 use \Monolog\Handler\StreamHandler;
 use \Monolog\Formatter\LineFormatter;
@@ -180,7 +181,7 @@ class Log
                 }
             }
             if ($data) {
-                $this->log(snake_case($name), $data);
+                $this->log(Str::snake($name), $data);
             }
         }
     }

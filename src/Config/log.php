@@ -7,5 +7,6 @@ return [
 //    'format' => "[%datetime%] %message%\n",
 //    'dateFormat' => 'd/M/Y:H:i:s O',
 //    'facade' => \App\Facades\Log::class,
-//    'collapseFirstWord' => false
+//    'collapseFirstWord' => false,
+//    'title' => 'Title logs'
 ];
