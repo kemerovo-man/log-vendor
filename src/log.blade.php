@@ -31,11 +31,16 @@
 <body>
 @if($dateLogs)
     <form method="GET" action="/logs">
-        <input type="text" name="search">
-        <input type="submit" value="search">
+        <input type="text" name="search" value="{{$search}}">
+        <input type="submit" value="Search">
     </form>
 @endif
-<h2>Логи</h2>
+<h2>
+    Logs {{$search}}
+    @if($search)
+        <a href="/logs">(reset search results)</a>
+    @endif
+</h2>
 <br>
 @foreach($dateLogs as $date=>$logs)
     <div class="date">
