@@ -29,7 +29,12 @@
     </script>
 </head>
 <body>
-
+@if($dateLogs)
+    <form method="GET" action="/logs">
+        <input type="text" name="search">
+        <input type="submit" value="send">
+    </form>
+@endif
 <h2>Логи</h2>
 <br>
 @foreach($dateLogs as $date=>$logs)

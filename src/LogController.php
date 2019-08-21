@@ -3,6 +3,7 @@
 namespace KemerovoMan\LogVendor;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
 class LogController extends Controller
@@ -10,11 +11,29 @@ class LogController extends Controller
 
     public function index()
     {
+        $search = Input::get('search');
         View::addLocation(__DIR__);
+        $logs = $this->getJsonLogs();
+        if ($search) {
+            $logs = array_filter($logs, function ($log) use ($search) {
+                $content = file_get_contents(storage_path('logs') . '/' . $log);
+                return strpos($content, $search) !== false;
+            });
+        }
+        $res = $this->prepareLogs($logs);
+        return View::make('log')->with('dateLogs', $res);
+    }
+
+    private function getJsonLogs()
+    {
         $logs = scandir(storage_path('logs'));
-        $logs = array_filter($logs, function ($log) {
+        return array_filter($logs, function ($log) {
             return strpos($log, '.json') !== false;
         });
+    }
+
+    private function prepareLogs($logs)
+    {
         natsort($logs);
         $res = [];
         foreach ($logs as $log) {
@@ -30,7 +49,7 @@ class LogController extends Controller
             $res[$date][$firstWord][] = $log;
             $res[$date]['ALL'][] = $log;
         }
-        return View::make('log')->with('dateLogs', $res);
+        return $res;
     }
 
     public function show($file)
