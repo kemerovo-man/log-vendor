@@ -32,7 +32,7 @@
 @if($dateLogs)
     <form method="GET" action="/logs">
         <input type="text" name="search">
-        <input type="submit" value="send">
+        <input type="submit" value="search">
     </form>
 @endif
 <h2>Логи</h2>
