@@ -21,7 +21,9 @@ class LogController extends Controller
             });
         }
         $res = $this->prepareLogs($logs);
-        return View::make('log')->with('dateLogs', $res);
+        return View::make('log')
+            ->with('dateLogs', $res)
+            ->with('search', $search);
     }
 
     private function getJsonLogs()
