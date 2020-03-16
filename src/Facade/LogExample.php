@@ -24,6 +24,6 @@ class LogExample extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'log.vendor.service';
+        return \KemerovoMan\LogVendor\Log::class;
     }
 }

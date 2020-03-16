@@ -81,7 +81,12 @@ class Log
         $format = new LineFormatter($lineFormat, $dateFormat);
         $streamHandler->setFormatter($format);
         $log->pushHandler($streamHandler);
-        $log->addInfo($info);
+        $log->info($info);
+        try {
+            chmod($path, config('log.permission', 0644));
+        } catch (\Exception $e) {
+
+        }
     }
 
     protected function jsonLog($name, $params)
@@ -107,7 +112,12 @@ class Log
         $logInfo = array_merge($logInfo, $params);
         $logInfo = json_encode($logInfo);
         if ($logInfo) {
-            $log->addInfo($logInfo);
+            $log->info($logInfo);
+            try {
+                chmod($jsonLog, config('log.permission', 0644));
+            } catch (\Exception $e) {
+
+            }
         }
     }
 

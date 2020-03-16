@@ -2,16 +2,16 @@
 
 namespace KemerovoMan\LogVendor;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
 class LogController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $search = Input::get('search');
+        $search = $request->search;
         $title = config('log.title');
         View::addLocation(__DIR__);
         $logs = $this->getJsonLogs();

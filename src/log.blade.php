@@ -18,14 +18,14 @@
         }
     </style>
     <script language="JavaScript">
-      $(function () {
-        $('.date').click(function () {
-          $(this).next().slideToggle();
+        $(function () {
+            $('.date').click(function () {
+                $(this).next().slideToggle();
+            });
+            $('.first_word').click(function () {
+                $(this).next().slideToggle();
+            });
         });
-        $('.first_word').click(function () {
-          $(this).next().slideToggle();
-        });
-      });
     </script>
 </head>
 <body>
